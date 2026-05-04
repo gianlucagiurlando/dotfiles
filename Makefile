@@ -1,20 +1,20 @@
 edit-colors:
-	open terminal/colors.yaml
+	nvim terminal/colors.yaml
 
 edit-symbols:
-	open terminal/p10k/symbols.zsh
+	nvim terminal/p10k/symbols.zsh
 
 edit-segments:
-	open terminal/p10k/segments.zsh
+	nvim terminal/p10k/segments.zsh
 
 edit-wezterm:
-	open terminal/wezterm/appearance.lua
+	nvim terminal/wezterm/appearance.lua
 
 edit-fonts:
-	open terminal/wezterm/fonts.lua
+	nvim terminal/wezterm/fonts.lua
 
 edit-keybindings:
-	open terminal/wezterm/keybindings.lua
+	nvim terminal/wezterm/keybindings.lua
 
 sync:
 	bash terminal/sync-colors.sh
