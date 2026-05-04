@@ -8,6 +8,8 @@ typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   os_icon                 # os identifier
   dir                     # current directory
   vcs                     # git status
+  newline                 # \n
+  prompt_char             # prompt symbol (❯)
 )
 
 typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
@@ -88,7 +90,7 @@ typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
 # ---- dir ----
 
 # Shorten long directory paths by truncating to unique prefixes.
-typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
+typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=
 typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
 typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
 local anchor_files=(
@@ -118,7 +120,7 @@ local anchor_files=(
 )
 typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER="(${(j:|:)anchor_files})"
 typeset -g POWERLEVEL9K_DIR_TRUNCATE_BEFORE_MARKER=false
-typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=
 typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=80
 typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS=40
 typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT=50
