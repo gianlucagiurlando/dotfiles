@@ -5,7 +5,7 @@ local wezterm = require("wezterm")
 local M = {}
 
 M.config = {
-	font      = wezterm.font("MesloLGS Nerd Font Mono"),
+	font = wezterm.font("JetBrainsMono Nerd Font"),
 	font_size = 19,
 }
 
