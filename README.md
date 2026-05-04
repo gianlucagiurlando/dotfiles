@@ -1,8 +1,8 @@
 # dev-environment-files
 
-Personal, modular dev environment configs — version-controlled and symlink-based so every tool finds its file in the expected place while the source of truth lives here.
+Personal, modular dev environment configs — version-controlled and symlink-based. Every tool finds its config at the path it expects; the source of truth lives here.
 
-Currently focused on terminal setup. Designed to grow into a full environment config covering Neovim, Git, SSH, and more.
+Currently focused on terminal setup. Designed to grow into a full environment covering Neovim, Git, SSH, and more.
 
 ---
 
@@ -10,35 +10,40 @@ Currently focused on terminal setup. Designed to grow into a full environment co
 
 ```
 dev-environment-files/
+├── Makefile                    # shortcuts for editing and syncing
 ├── README.md
 └── terminal/
+    ├── colors.yaml             # single source of truth for all colors
+    ├── sync-colors.sh          # generates p10k + wezterm color files from colors.yaml
+    ├── install.sh              # symlinks configs to home directory
     ├── README.md
-    ├── install.sh          # creates ~/.p10k.zsh → terminal/p10k/p10k.zsh
-    └── p10k/
-        ├── p10k.zsh        # entry point — sources the three modules below
-        ├── colors.zsh      # all FOREGROUND / BACKGROUND color values
-        ├── symbols.zsh     # Nerd Font icons, separators, glyphs
-        └── segments.zsh    # prompt elements, git formatter, per-segment config
+    ├── p10k/
+    │   ├── p10k.zsh            # entry point → ~/.p10k.zsh
+    │   ├── colors.zsh          # auto-synced from colors.yaml (do not edit directly)
+    │   ├── symbols.zsh         # icons, glyphs, separators
+    │   └── segments.zsh        # prompt elements & git formatter
+    └── wezterm/
+        ├── wezterm.lua         # entry point → ~/.wezterm.lua
+        ├── colors.lua          # auto-synced from colors.yaml (do not edit directly)
+        ├── fonts.lua           # font family & size
+        ├── keybindings.lua     # key mappings
+        └── appearance.lua      # window, tabs, padding, opacity
 ```
 
 ---
 
 ## Philosophy
 
-Most dotfile repos are single-file monoliths. A 1700-line `~/.p10k.zsh` works, but it makes every edit a grep hunt and diffs are unreadable.
+Most dotfile repos are single-file monoliths. A 1700-line `~/.p10k.zsh` works, but every edit is a grep hunt and diffs are unreadable.
 
-This repo splits each concern into its own file:
+This repo separates each concern into its own file, and treats `colors.yaml` as the single source of truth shared across both the terminal prompt and the terminal emulator.
 
-| File | Single responsibility |
-|------|-----------------------|
-| `colors.zsh` | Every color number in one place — change your palette without touching logic |
-| `symbols.zsh` | Every icon and separator — swap Nerd Font glyphs without touching colors |
-| `segments.zsh` | Which segments appear and how they behave — no color noise |
-| `p10k.zsh` | Entry point only — sources the modules, sets global options |
-
-**Symlink-based**: `install.sh` creates `~/.p10k.zsh → .../terminal/p10k/p10k.zsh`. Tools find the config at the path they expect; the actual file lives here under version control.
-
-**Live reload**: after any edit, `source ~/.p10k.zsh` picks up all module changes instantly — no shell restart needed.
+| Principle | How it's applied |
+|-----------|-----------------|
+| **Modular** | Each file has one job — colors, symbols, segments, fonts, keybindings |
+| **Single color source** | `colors.yaml` feeds both p10k and WezTerm via `sync-colors.sh` |
+| **Version controlled** | All configs live here, not scattered in `~` |
+| **Symlink-based** | `install.sh` links `~/.p10k.zsh` and `~/.wezterm.lua` here — tools find configs where they expect them |
 
 ---
 
@@ -47,7 +52,6 @@ This repo splits each concern into its own file:
 | Tool | Role |
 |------|------|
 | **zsh** | Shell |
-| **Oh My Zsh** | Plugin and theme management |
 | **Powerlevel10k** | Prompt engine — fast, highly configurable, git-aware |
 | **WezTerm** | GPU-accelerated terminal emulator — Lua-configurable, multiplexer built in |
 | **Nerd Fonts** | Icon glyphs used by the prompt (nerdfont-v3) |
@@ -58,76 +62,85 @@ This repo splits each concern into its own file:
 
 ### Prerequisites
 
-- zsh with [Oh My Zsh](https://ohmyz.sh)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) installed
-- A [Nerd Font](https://www.nerdfonts.com) configured in your terminal (e.g. MesloLGS NF, JetBrainsMono Nerd Font)
+- zsh with [Powerlevel10k](https://github.com/romkatv/powerlevel10k) installed
+- [WezTerm](https://wezfurlong.org/wezterm/) installed
+- A [Nerd Font](https://www.nerdfonts.com) configured in WezTerm (e.g. JetBrainsMono Nerd Font)
 
 ### Install
 
 ```bash
-git clone https://github.com/gianlucagiurlando/dev-environment-files.git ~/repos/dev-environment-files
-cd ~/repos/dev-environment-files
-bash terminal/install.sh
+git clone https://github.com/gianlucagiurlando/dev-environment-files.git
+cd dev-environment-files
+make install
 ```
 
-`install.sh` creates the symlink:
+`install.sh` creates the symlinks:
 
 ```
-~/.p10k.zsh → .../terminal/p10k/p10k.zsh
+~/.p10k.zsh    → .../terminal/p10k/p10k.zsh
+~/.wezterm.lua → .../terminal/wezterm/wezterm.lua
 ```
 
-Then apply:
+Then reload your shell or run:
 
 ```zsh
 source ~/.p10k.zsh
-```
-
-### Verify
-
-```zsh
-ls -la ~/.p10k.zsh        # should show symlink → terminal/p10k/p10k.zsh
-source ~/.p10k.zsh && echo "✓ loaded"
 ```
 
 ---
 
-## Customising
+## How to customize
 
-### Change colors
+All common edits have Makefile shortcuts. Run `make help` to see the full list.
 
-Open `terminal/p10k/colors.zsh`. Colors are xterm-256 indices. A WezTerm alignment table at the bottom shows which prompt colors to update when switching terminal themes.
+### Colors (both prompt and terminal)
+
+Edit `terminal/colors.yaml` — this is the single source of truth for every color in both p10k and WezTerm. After editing, sync both configs:
 
 ```bash
-# Preview the 256-color palette in your terminal
-for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
+make sync
 ```
 
-### Change icons or separators
+This runs `sync-colors.sh`, which rewrites `p10k/colors.zsh` and `wezterm/colors.lua` from `colors.yaml`. Do not edit those generated files directly.
 
-Open `terminal/p10k/symbols.zsh`. Each glyph is a Unicode code point from the Nerd Fonts v3 set.
+### Prompt symbols and icons
 
-### Change which segments appear
+```bash
+make edit-symbols   # opens terminal/p10k/symbols.zsh
+```
 
-Open `terminal/p10k/segments.zsh` and edit `POWERLEVEL9K_LEFT_PROMPT_ELEMENTS` or `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS`. Per-segment config (thresholds, sources, show-on-command) is grouped by segment directly below the element lists.
+### Prompt segments
 
-### Apply any change
+```bash
+make edit-segments  # opens terminal/p10k/segments.zsh
+```
 
-```zsh
-source ~/.p10k.zsh
+Edit `POWERLEVEL9K_LEFT_PROMPT_ELEMENTS` / `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS` and per-segment config grouped below.
+
+### WezTerm appearance
+
+```bash
+make edit-wezterm      # window, tabs, padding, opacity
+make edit-fonts        # font family & size
+make edit-keybindings  # key mappings
+```
+
+### Push changes
+
+```bash
+make push   # git add . && commit && push
 ```
 
 ---
 
 ## Roadmap
 
-- [ ] `terminal/wezterm/` — WezTerm Lua config (colors, keybindings, multiplexer)
 - [ ] `nvim/` — Neovim config
 - [ ] `git/` — `.gitconfig`, global ignore
 - [ ] `ssh/` — `~/.ssh/config` template
 
 ---
 
-## Author
+## License
 
-**Gianluca Giurlando** — ML/AI Engineer  
-[github.com/gianlucagiurlando](https://github.com/gianlucagiurlando)
+MIT
