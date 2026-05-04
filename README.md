@@ -68,6 +68,13 @@ This repo separates each concern into its own file, and treats `colors.yaml` as 
 
 ### Install
 
+> **Important:** always run `make` from the repo root.
+> ```bash
+> cd ~/repos/templates/dev-environment-files
+> make install
+> make sync
+> ```
+
 ```bash
 git clone https://github.com/gianlucagiurlando/dev-environment-files.git
 cd dev-environment-files

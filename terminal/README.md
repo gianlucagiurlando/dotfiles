@@ -4,6 +4,18 @@ Modular terminal config split across focused files for p10k and WezTerm. A singl
 
 ---
 
+## Usage
+
+> **Important:** always run `make` from the repo root — not from inside `terminal/`.
+
+```bash
+cd ~/repos/templates/dev-environment-files
+make install
+make sync
+```
+
+---
+
 ## Structure
 
 ```
