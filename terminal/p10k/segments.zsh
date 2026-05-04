@@ -477,5 +477,5 @@ typeset -g POWERLEVEL9K_BATTERY_VERBOSE=false
 
 # ---- time ----
 
-typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%I:%M:%S %p}'
+typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M}'
 typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=false
