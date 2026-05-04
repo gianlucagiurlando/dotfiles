@@ -1,31 +1,33 @@
+ROOT := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+
 edit-colors:
-	nvim terminal/colors.yaml
+	nvim $(ROOT)/terminal/colors.yaml
 
 edit-symbols:
-	nvim terminal/p10k/symbols.zsh
+	nvim $(ROOT)/terminal/p10k/symbols.zsh
 
 edit-segments:
-	nvim terminal/p10k/segments.zsh
+	nvim $(ROOT)/terminal/p10k/segments.zsh
 
 edit-wezterm:
-	nvim terminal/wezterm/appearance.lua
+	nvim $(ROOT)/terminal/wezterm/appearance.lua
 
 edit-fonts:
-	nvim terminal/wezterm/fonts.lua
+	nvim $(ROOT)/terminal/wezterm/fonts.lua
 
 edit-keybindings:
-	nvim terminal/wezterm/keybindings.lua
+	nvim $(ROOT)/terminal/wezterm/keybindings.lua
 
 sync:
-	bash terminal/sync-colors.sh
+	bash $(ROOT)/terminal/sync-colors.sh
 
 install:
-	bash terminal/install.sh
+	bash $(ROOT)/terminal/install.sh
 
 push:
-	git add .
-	git commit -m "chore: update terminal config"
-	git push
+	git -C $(ROOT) add .
+	git -C $(ROOT) commit -m "chore: update terminal config"
+	git -C $(ROOT) push
 
 help:
 	@echo ""

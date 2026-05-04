@@ -4,7 +4,7 @@
 
 # Set to "custom" to use the hex palette below
 # Or set to any WezTerm built-in theme name e.g. "Dracula (Official)"
-theme: "custom"
+theme: "Dracula (Official)"
 
 palette:
   background:   { hex: "#011423" }

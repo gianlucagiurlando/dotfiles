@@ -31,7 +31,7 @@ local function merge(dst, src)
 	end
 end
 
-merge(config, colors.config)
+--merge(config, colors.config)
 merge(config, fonts.config)
 merge(config, keybindings.config)
 merge(config, appearance.config)
