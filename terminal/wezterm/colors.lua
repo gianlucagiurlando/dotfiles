@@ -18,7 +18,7 @@ M.config = {
 			"#44FFB1", -- green
 			"#FFE073", -- yellow
 			"#0FC5ED", -- blue
-			"#a277ff", -- magenta
+			"#A277FF", -- magenta
 			"#24EAF7", -- cyan
 			"#24EAF7", -- white
 		},
