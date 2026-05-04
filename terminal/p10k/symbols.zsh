@@ -47,6 +47,9 @@ typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
 typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
 
 # -- VCS / git --
+# VCS type icon for github.com remotes.
+# Default is U+F113 (octocat); override with U+F1D3 (git wordmark glyph).
+typeset -g POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$''
 # Branch icon (U+F126 = git-branch glyph).
 typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=' '
 # Untracked files marker.
