@@ -5,17 +5,24 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 YAML="$SCRIPT_DIR/colors.yaml"
 WEZTERM_LUA="$SCRIPT_DIR/wezterm/colors.lua"
 P10K_ZSH="$SCRIPT_DIR/p10k/colors.zsh"
+APPEARANCE_LUA="$SCRIPT_DIR/wezterm/appearance.lua"
+WEZTERM_MAIN="$SCRIPT_DIR/wezterm/wezterm.lua"
 
 echo "sync-colors: reading $YAML"
 echo ""
 
-python3 - "$YAML" "$WEZTERM_LUA" "$P10K_ZSH" <<'PYEOF'
+python3 - "$YAML" "$WEZTERM_LUA" "$P10K_ZSH" "$APPEARANCE_LUA" "$WEZTERM_MAIN" <<'PYEOF'
 import sys, re
 
-yaml_file, lua_file, zsh_file = sys.argv[1], sys.argv[2], sys.argv[3]
+yaml_file, lua_file, zsh_file, appearance_file, wezterm_main = \
+    sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
 
 with open(yaml_file) as f:
     src = f.read()
+
+# ── Parse theme ────────────────────────────────────────────────────────────
+theme_m = re.search(r'^theme:\s*"([^"]*)"', src, re.MULTILINE)
+theme = theme_m.group(1) if theme_m else "custom"
 
 # ── Parse palette ──────────────────────────────────────────────────────────
 palette = {}
@@ -35,18 +42,22 @@ prompt_roles = {
     for m in re.finditer(r'^\s{2}(\w+):\s*\{\s*role:\s*(\w+)\s*\}', src, re.MULTILINE)
 }
 
-# ── Regenerate wezterm/colors.lua ──────────────────────────────────────────
-ANSI   = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
-BRIGHT = ['bright_' + c for c in ANSI]
+# ── Theme: custom ─────────────────────────────────────────────────────────
+if theme == "custom":
+    print('[theme]               "custom" → generating colors.lua from palette')
 
-def lua_list(names):
-    return '\n'.join(
-        f'\t\t\t"{palette[n]["hex"]}", -- {n.replace("_", " ")}'
-        for n in names
-    )
+    # Regenerate wezterm/colors.lua
+    ANSI   = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+    BRIGHT = ['bright_' + c for c in ANSI]
 
-p = palette
-lua = f"""\
+    def lua_list(names):
+        return '\n'.join(
+            f'\t\t\t"{palette[n]["hex"]}", -- {n.replace("_", " ")}'
+            for n in names
+        )
+
+    p = palette
+    lua = f"""\
 -- ============ COLOR PALETTE ============
 -- Single source of truth for terminal colors, shared with p10k later.
 
@@ -73,12 +84,79 @@ M.config = {{
 return M
 """
 
-with open(lua_file, 'w') as f:
-    f.write(lua)
-print("[wezterm/colors.lua]  regenerated")
+    with open(lua_file, 'w') as f:
+        f.write(lua)
+    print("[wezterm/colors.lua]  regenerated")
+
+    # Remove color_scheme from appearance.lua if present
+    with open(appearance_file) as f:
+        appearance = f.read()
+    appearance_new = re.sub(r'^\t*color_scheme\s*=\s*"[^"]*",?\n', '', appearance, flags=re.MULTILINE)
+    if appearance_new != appearance:
+        with open(appearance_file, 'w') as f:
+            f.write(appearance_new)
+        print("[wezterm/appearance.lua] color_scheme removed")
+    else:
+        print("[wezterm/appearance.lua] color_scheme already absent")
+
+    # Uncomment merge(config, colors.config) in wezterm.lua if commented
+    with open(wezterm_main) as f:
+        wezterm = f.read()
+    wezterm_new = re.sub(
+        r'^--merge\(config, colors\.config\)',
+        'merge(config, colors.config)',
+        wezterm, flags=re.MULTILINE
+    )
+    if wezterm_new != wezterm:
+        with open(wezterm_main, 'w') as f:
+            f.write(wezterm_new)
+        print("[wezterm/wezterm.lua] merge(config, colors.config) uncommented")
+    else:
+        print("[wezterm/wezterm.lua] merge(config, colors.config) already active")
+
+# ── Theme: built-in ────────────────────────────────────────────────────────
+else:
+    print(f'[theme]               "{theme}" → using built-in WezTerm theme')
+    print( '                      Note: colors.lua is bypassed when a theme is active')
+
+    # Set color_scheme in appearance.lua (replace or insert)
+    with open(appearance_file) as f:
+        appearance = f.read()
+    cs_line = f'\tcolor_scheme = "{theme}",'
+    if re.search(r'^\t*color_scheme\s*=', appearance, re.MULTILINE):
+        appearance_new = re.sub(
+            r'^\t*color_scheme\s*=\s*"[^"]*",?',
+            cs_line, appearance, flags=re.MULTILINE
+        )
+    else:
+        appearance_new = re.sub(
+            r'(window_decorations\s*=\s*"[^"]*",)',
+            r'\1\n' + cs_line,
+            appearance
+        )
+    if appearance_new != appearance:
+        with open(appearance_file, 'w') as f:
+            f.write(appearance_new)
+        print(f'[wezterm/appearance.lua] color_scheme set to "{theme}"')
+    else:
+        print(f'[wezterm/appearance.lua] color_scheme already "{theme}"')
+
+    # Comment out merge(config, colors.config) in wezterm.lua
+    with open(wezterm_main) as f:
+        wezterm = f.read()
+    wezterm_new = re.sub(
+        r'^merge\(config, colors\.config\)',
+        '--merge(config, colors.config)',
+        wezterm, flags=re.MULTILINE
+    )
+    if wezterm_new != wezterm:
+        with open(wezterm_main, 'w') as f:
+            f.write(wezterm_new)
+        print("[wezterm/wezterm.lua] merge(config, colors.config) commented out")
+    else:
+        print("[wezterm/wezterm.lua] merge(config, colors.config) already inactive")
 
 # ── Update p10k/colors.zsh ─────────────────────────────────────────────────
-# Maps YAML prompt role names to the p10k variables they govern.
 ROLE_MAP = {
     'directory':    ['POWERLEVEL9K_DIR_FOREGROUND'],
     'dir_anchor':   ['POWERLEVEL9K_DIR_ANCHOR_FOREGROUND'],

@@ -2,6 +2,10 @@
 # Edit hex values here. Run ./sync-colors.sh to regenerate
 # terminal/p10k/colors.zsh and terminal/wezterm/colors.lua
 
+# Set to "custom" to use the hex palette below
+# Or set to any WezTerm built-in theme name e.g. "Dracula (Official)"
+theme: "custom"
+
 palette:
   background:   { hex: "#011423" }
   foreground:   { hex: "#CBE0F0" }
