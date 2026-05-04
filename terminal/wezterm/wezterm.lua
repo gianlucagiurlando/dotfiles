@@ -17,10 +17,10 @@ local real_path = handle:read("*l")
 handle:close()
 local config_dir = real_path:match("^(.-)[^/]+$")
 
-local colors      = dofile(config_dir .. "colors.lua")
-local fonts       = dofile(config_dir .. "fonts.lua")
+local colors = dofile(config_dir .. "colors.lua")
+local fonts = dofile(config_dir .. "fonts.lua")
 local keybindings = dofile(config_dir .. "keybindings.lua")
-local appearance  = dofile(config_dir .. "appearance.lua")
+local appearance = dofile(config_dir .. "appearance.lua")
 
 local config = wezterm.config_builder()
 
@@ -31,7 +31,7 @@ local function merge(dst, src)
 	end
 end
 
-merge(config, colors.config)
+--merge(config, colors.config)
 merge(config, fonts.config)
 merge(config, keybindings.config)
 merge(config, appearance.config)
