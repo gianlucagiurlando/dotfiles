@@ -10,3 +10,9 @@ echo "✓ ~/.wezterm.lua → $DOTFILES/wezterm/wezterm.lua"
 
 ln -sf "$REPO_ROOT/nvim" ~/.config/nvim
 echo "✓ ~/.config/nvim → $REPO_ROOT/nvim"
+
+ln -sf "$REPO_ROOT/git/.gitconfig" ~/.gitconfig
+echo "✓ ~/.gitconfig → $REPO_ROOT/git/.gitconfig"
+
+ln -sf "$REPO_ROOT/git/.gitignore_global" ~/.gitignore_global
+echo "✓ ~/.gitignore_global → $REPO_ROOT/git/.gitignore_global"

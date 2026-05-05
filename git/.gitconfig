@@ -1,0 +1,8 @@
+[user]
+	name = Gianluca Giurlando
+[http]
+	sslVerify = true
+[core]
+	excludesfile = ~/.gitignore_global
+[include]
+	path = ~/.gitconfig.local
