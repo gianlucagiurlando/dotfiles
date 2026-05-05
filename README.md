@@ -160,7 +160,7 @@ make push   # git add . && commit && push
 - [x] `nvim/` — LazyVim config
 - [x] `git/` — `.gitconfig`, global ignore
 - [x] `zsh/` — modular `.zshrc`
-- [ ] `ssh/` — `~/.ssh/config` template
+- [ ] `ssh/` — future, add when needed; will follow the same public/private split as `git/` (public host config in repo, private identities/keys outside)
 
 ---
 
