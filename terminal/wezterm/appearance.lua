@@ -5,7 +5,7 @@ local M = {}
 
 M.config = {
 	enable_tab_bar = true,
-	window_decorations = "RESIZE",
+	window_decorations = "RESIZE|TITLE",
 	--color_scheme = "GruvboxDark",
 	color_scheme = "Gruvbox Dark (Gogh)",
 	--color_scheme = "Dracula (Official)",
