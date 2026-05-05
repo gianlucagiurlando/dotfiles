@@ -2,7 +2,7 @@
 
 Personal, modular dev environment configs — version-controlled and symlink-based. Every tool finds its config at the path it expects; the source of truth lives here.
 
-Currently focused on terminal setup. Designed to grow into a full environment covering Neovim, Git, SSH, and more.
+Covers terminal setup and Neovim. Designed to grow into a full environment covering Git, SSH, zsh, and more.
 
 ---
 
@@ -12,6 +12,7 @@ Currently focused on terminal setup. Designed to grow into a full environment co
 dev-environment-files/
 ├── Makefile                    # shortcuts for editing and syncing
 ├── README.md
+├── nvim/                       # LazyVim config → ~/.config/nvim
 └── terminal/
     ├── colors.yaml             # single source of truth for all colors
     ├── sync-colors.sh          # generates p10k + wezterm color files from colors.yaml
@@ -84,8 +85,9 @@ make install
 `install.sh` creates the symlinks:
 
 ```
-~/.p10k.zsh    → .../terminal/p10k/p10k.zsh
-~/.wezterm.lua → .../terminal/wezterm/wezterm.lua
+~/.p10k.zsh      → .../terminal/p10k/p10k.zsh
+~/.wezterm.lua   → .../terminal/wezterm/wezterm.lua
+~/.config/nvim   → .../nvim/
 ```
 
 Then reload your shell or run:
@@ -142,9 +144,10 @@ make push   # git add . && commit && push
 
 ## Roadmap
 
-- [ ] `nvim/` — Neovim config
+- [x] `nvim/` — LazyVim config
 - [ ] `git/` — `.gitconfig`, global ignore
 - [ ] `ssh/` — `~/.ssh/config` template
+- [ ] `zshrc` — `.zshrc`
 
 ---
 
