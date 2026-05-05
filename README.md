@@ -2,7 +2,7 @@
 
 Personal, modular dev environment configs — version-controlled and symlink-based. Every tool finds its config at the path it expects; the source of truth lives here.
 
-Covers terminal setup and Neovim. Designed to grow into a full environment covering Git, SSH, zsh, and more.
+Covers terminal setup, Neovim, Git, and zsh. Designed to grow into a full environment covering SSH and more.
 
 ---
 
@@ -12,7 +12,17 @@ Covers terminal setup and Neovim. Designed to grow into a full environment cover
 dev-environment-files/
 ├── Makefile                    # shortcuts for editing and syncing
 ├── README.md
+├── git/
+│   ├── .gitconfig              # public git config → ~/.gitconfig
+│   └── .gitignore_global       # global ignore → ~/.gitignore_global
 ├── nvim/                       # LazyVim config → ~/.config/nvim
+├── zsh/                        # modular zsh config → ~/.zshrc
+│   ├── .zshrc                  # entry point
+│   ├── p10k.zsh                # instant prompt
+│   ├── plugins.zsh             # oh-my-zsh + plugins
+│   ├── aliases.zsh             # shell aliases
+│   ├── path.zsh                # PATH & exports
+│   └── functions.zsh           # shell functions
 └── terminal/
     ├── colors.yaml             # single source of truth for all colors
     ├── sync-colors.sh          # generates p10k + wezterm color files from colors.yaml
@@ -85,15 +95,18 @@ make install
 `install.sh` creates the symlinks:
 
 ```
-~/.p10k.zsh      → .../terminal/p10k/p10k.zsh
-~/.wezterm.lua   → .../terminal/wezterm/wezterm.lua
-~/.config/nvim   → .../nvim/
+~/.p10k.zsh          → .../terminal/p10k/p10k.zsh
+~/.wezterm.lua       → .../terminal/wezterm/wezterm.lua
+~/.config/nvim       → .../nvim/
+~/.gitconfig         → .../git/.gitconfig
+~/.gitignore_global  → .../git/.gitignore_global
+~/.zshrc             → .../zsh/.zshrc
 ```
 
-Then reload your shell or run:
+Then reload your shell:
 
 ```zsh
-source ~/.p10k.zsh
+source ~/.zshrc
 ```
 
 ---
@@ -145,9 +158,9 @@ make push   # git add . && commit && push
 ## Roadmap
 
 - [x] `nvim/` — LazyVim config
-- [ ] `git/` — `.gitconfig`, global ignore
+- [x] `git/` — `.gitconfig`, global ignore
+- [x] `zsh/` — modular `.zshrc`
 - [ ] `ssh/` — `~/.ssh/config` template
-- [ ] `zshrc` — `.zshrc`
 
 ---
 
