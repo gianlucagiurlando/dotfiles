@@ -16,3 +16,6 @@ echo "✓ ~/.gitconfig → $REPO_ROOT/git/.gitconfig"
 
 ln -sf "$REPO_ROOT/git/.gitignore_global" ~/.gitignore_global
 echo "✓ ~/.gitignore_global → $REPO_ROOT/git/.gitignore_global"
+
+ln -sf "$REPO_ROOT/zsh/.zshrc" ~/.zshrc
+echo "✓ ~/.zshrc → $REPO_ROOT/zsh/.zshrc"
