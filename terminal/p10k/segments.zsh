@@ -4,24 +4,27 @@
 
 # ---- PROMPT ELEMENTS ----
 
+
+#function to show tmux_session inside left prompt
+function prompt_tmux_session() {
+  [[ -n "$TMUX" ]] || return
+  p10k segment -t "$(tmux display-message -p '#S')"
+}
+
+typeset -g POWERLEVEL9K_TMUX_SESSION_FOREGROUND=39
+typeset -g POWERLEVEL9K_TMUX_SESSION_BACKGROUND=
+
+
+
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-  #os_icon                 # os identifier
+  tmux_session            #tmux current session
   dir                     # current directory
   vcs                     # git status
   newline                 # \n
   prompt_char             # prompt symbol (●)
 )
 
-# typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-#   status
-#   command_execution_time
-#   virtualenv
-#   pyenv
-#   nvm
-#   aws
-#   context
-#   time
-# )
+
 
 typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   status
@@ -29,10 +32,20 @@ typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   virtualenv
   time
 )
+
+typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION='${P9K_CONTENT} ($($VIRTUAL_ENV/bin/python -c "import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")"))'
 # Show the Python version used by the active virtual environment.
-typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION='${P9K_CONTENT} ($(python -c "import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")"))'
+# typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION='${P9K_CONTENT} ($(python -c "import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")"))'
 # Hide the Python icon and display only the environment name and version.
 typeset -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION=''
+
+
+
+
+
+
+
+
 
 # ---- prompt_char ----
 
