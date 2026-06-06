@@ -1,5 +1,5 @@
 # ============ ALIASES ============
-alias l='eza -a --tree --icons --level=1'
+alias l='eza --tree --icons --level=1'
 alias v='nvim'
 alias c='clear'
 
