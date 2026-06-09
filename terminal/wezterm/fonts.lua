@@ -5,8 +5,8 @@ local wezterm = require("wezterm")
 local M = {}
 
 M.config = {
-	font = wezterm.font("OperatorMono Nerd Font", { weight = "Regular" }),
-	font_size = 19,
+	font = wezterm.font("MonoLisa Nerd Font", { weight = "Regular" }),
+	font_size = 18,
 }
 
 return M
@@ -18,8 +18,8 @@ return M
 -- Blexmono Nerd Font
 -- Hack Nerd Font Mono
 -- MesloLGS Nerd Font Mono
-
-
+-- MonoLisa Nerd Font
+--OperatorMono Nerd Font
 
 --A LIST OF ALL NERD FONTS INSTALLED ON MY MAC
 -- fc-list | grep "Nerd Font" | sed -E 's/.*:([^:]+):.*/\1/' | sort -u
