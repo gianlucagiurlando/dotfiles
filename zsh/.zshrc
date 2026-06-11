@@ -1,4 +1,4 @@
-ZSHDIR="$HOME/repos/templates/dev-environment-files/zsh"
+ZSHDIR="$HOME/repos/dev-environment-files/zsh"
 
 source "$ZSHDIR/p10k.zsh"
 source "$ZSHDIR/plugins.zsh"
