@@ -2,6 +2,7 @@
 alias l='eza --tree --icons --level=1'
 alias v='nvim'
 alias c='clear'
+alias tw='tmux lsw -F "#I: #W"'
 
 # thefuck alias
 eval
