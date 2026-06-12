@@ -19,3 +19,13 @@ echo "✓ ~/.gitignore_global → $REPO_ROOT/git/.gitignore_global"
 
 ln -sf "$REPO_ROOT/zsh/.zshrc" ~/.zshrc
 echo "✓ ~/.zshrc → $REPO_ROOT/zsh/.zshrc"
+
+ln -sf "$REPO_ROOT/tmux/.tmux.conf" ~/.tmux.conf
+echo "✓ ~/.tmux.conf → $REPO_ROOT/tmux/.tmux.conf"
+
+ln -sf "$REPO_ROOT/zsh/.zprofile" ~/.zprofile
+echo "✓ ~/.zprofile → $REPO_ROOT/zsh/.zprofile"
+
+mkdir -p ~/.config/gh
+ln -sf "$REPO_ROOT/gh/config.yml" ~/.config/gh/config.yml
+echo "✓ ~/.config/gh/config.yml → $REPO_ROOT/gh/config.yml"
