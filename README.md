@@ -2,7 +2,7 @@
 
 Personal, modular dev environment configs — version-controlled and symlink-based. Every tool finds its config at the path it expects; the source of truth lives here.
 
-Covers terminal setup, Neovim, Git, and zsh. Designed to grow into a full environment covering SSH and more.
+Covers terminal setup, Neovim, Git, zsh, tmux, and gh CLI. Designed to grow into a full environment covering SSH and more.
 
 ---
 
@@ -15,9 +15,14 @@ dev-environment-files/
 ├── git/
 │   ├── .gitconfig              # public git config → ~/.gitconfig
 │   └── .gitignore_global       # global ignore → ~/.gitignore_global
+├── gh/
+│   └── config.yml              # gh CLI preferences & aliases → ~/.config/gh/config.yml
 ├── nvim/                       # LazyVim config → ~/.config/nvim
+├── tmux/
+│   └── .tmux.conf              # tmux config → ~/.tmux.conf
 ├── zsh/                        # modular zsh config → ~/.zshrc
 │   ├── .zshrc                  # entry point
+│   ├── .zprofile               # env setup (Homebrew, PATH) → ~/.zprofile
 │   ├── p10k.zsh                # instant prompt
 │   ├── plugins.zsh             # oh-my-zsh + plugins
 │   ├── aliases.zsh             # shell aliases
@@ -65,6 +70,8 @@ This repo separates each concern into its own file, and treats `colors.yaml` as 
 | **zsh** | Shell |
 | **Powerlevel10k** | Prompt engine — fast, highly configurable, git-aware |
 | **WezTerm** | GPU-accelerated terminal emulator — Lua-configurable, multiplexer built in |
+| **tmux** | Terminal multiplexer — sessions, panes, vim-keybindings, TPM plugins |
+| **gh** | GitHub CLI — configured with `co` alias and https protocol |
 | **Nerd Fonts** | Icon glyphs used by the prompt (nerdfont-v3) |
 
 ---
@@ -75,6 +82,8 @@ This repo separates each concern into its own file, and treats `colors.yaml` as 
 
 - zsh with [Powerlevel10k](https://github.com/romkatv/powerlevel10k) installed
 - [WezTerm](https://wezfurlong.org/wezterm/) installed
+- [tmux](https://github.com/tmux/tmux) with [TPM](https://github.com/tmux-plugins/tpm) installed
+- [gh](https://cli.github.com) CLI installed
 - A [Nerd Font](https://www.nerdfonts.com) configured in WezTerm (e.g. JetBrainsMono Nerd Font)
 
 ### Install
@@ -95,12 +104,15 @@ make install
 `install.sh` creates the symlinks:
 
 ```
-~/.p10k.zsh          → .../terminal/p10k/p10k.zsh
-~/.wezterm.lua       → .../terminal/wezterm/wezterm.lua
-~/.config/nvim       → .../nvim/
-~/.gitconfig         → .../git/.gitconfig
-~/.gitignore_global  → .../git/.gitignore_global
-~/.zshrc             → .../zsh/.zshrc
+~/.p10k.zsh              → .../terminal/p10k/p10k.zsh
+~/.wezterm.lua           → .../terminal/wezterm/wezterm.lua
+~/.config/nvim           → .../nvim/
+~/.gitconfig             → .../git/.gitconfig
+~/.gitignore_global      → .../git/.gitignore_global
+~/.zshrc                 → .../zsh/.zshrc
+~/.zprofile              → .../zsh/.zprofile
+~/.tmux.conf             → .../tmux/.tmux.conf
+~/.config/gh/config.yml  → .../gh/config.yml
 ```
 
 Then reload your shell:
@@ -147,6 +159,20 @@ make edit-fonts        # font family & size
 make edit-keybindings  # key mappings
 ```
 
+### tmux
+
+```bash
+make edit-tmux   # opens tmux/.tmux.conf
+```
+
+After saving, reload inside a running tmux session with `prefix + r` (bound to source-file).
+
+### gh CLI
+
+```bash
+make edit-gh   # opens gh/config.yml
+```
+
 ### Push changes
 
 ```bash
@@ -159,7 +185,9 @@ make push   # git add . && commit && push
 
 - [x] `nvim/` — LazyVim config
 - [x] `git/` — `.gitconfig`, global ignore
-- [x] `zsh/` — modular `.zshrc`
+- [x] `zsh/` — modular `.zshrc` + `.zprofile`
+- [x] `tmux/` — `.tmux.conf` with TPM plugins
+- [x] `gh/` — gh CLI config and aliases
 - [ ] `ssh/` — future, add when needed; will follow the same public/private split as `git/` (public host config in repo, private identities/keys outside)
 
 ---
