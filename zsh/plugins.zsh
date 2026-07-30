@@ -1,6 +1,7 @@
 # ============ PLUGINS ============
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME is set conditionally by prompt-early.zsh (sourced before this
+# file), based on zsh/.prompt-engine.
 
 plugins=(
   git

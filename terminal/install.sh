@@ -29,3 +29,10 @@ echo "✓ ~/.zprofile → $REPO_ROOT/zsh/.zprofile"
 mkdir -p ~/.config/gh
 ln -sf "$REPO_ROOT/gh/config.yml" ~/.config/gh/config.yml
 echo "✓ ~/.config/gh/config.yml → $REPO_ROOT/gh/config.yml"
+
+ln -sf "$DOTFILES/starship/starship.toml" ~/.config/starship.toml
+echo "✓ ~/.config/starship.toml → $DOTFILES/starship/starship.toml"
+
+mkdir -p ~/.config/ghostty
+ln -sf "$DOTFILES/ghostty/config" ~/.config/ghostty/config
+echo "✓ ~/.config/ghostty/config → $DOTFILES/ghostty/config"

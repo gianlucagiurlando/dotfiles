@@ -1,0 +1,4 @@
+# ============ KEYBINDINGS ============
+# No custom keybindings yet — Ghostty's defaults apply.
+# Add `keybind = ...` lines here as needed. See:
+#   ghostty +show-config --default --docs | grep -A50 '^keybind ='

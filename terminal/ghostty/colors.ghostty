@@ -1,0 +1,4 @@
+# ============ COLORS ============
+# Built-in Ghostty theme. Exact name confirmed via `ghostty +list-themes`.
+# Matches WezTerm (terminal/wezterm/appearance.lua) and p10k (terminal/p10k/p10k.zsh).
+theme = "Catppuccin Mocha"

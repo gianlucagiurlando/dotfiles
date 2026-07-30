@@ -2,10 +2,9 @@
 -- WezTerm entry point — modular config
 --
 -- Modules live alongside this file:
---   colors.lua      → color palette (shared source of truth with p10k)
 --   fonts.lua       → font family, size, fallbacks
 --   keybindings.lua → keys, key_tables, mouse_bindings
---   appearance.lua  → decorations, tab bar, padding, opacity
+--   appearance.lua  → decorations, tab bar, padding, opacity, color_scheme
 -- =======================================================
 
 local wezterm = require("wezterm")
@@ -17,7 +16,6 @@ local real_path = handle:read("*l")
 handle:close()
 local config_dir = real_path:match("^(.-)[^/]+$")
 
-local colors = dofile(config_dir .. "colors.lua")
 local fonts = dofile(config_dir .. "fonts.lua")
 local keybindings = dofile(config_dir .. "keybindings.lua")
 local appearance = dofile(config_dir .. "appearance.lua")
@@ -31,7 +29,6 @@ local function merge(dst, src)
 	end
 end
 
---merge(config, colors.config)
 merge(config, fonts.config)
 merge(config, keybindings.config)
 merge(config, appearance.config)

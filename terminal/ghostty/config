@@ -1,0 +1,17 @@
+# =======================================================
+# Ghostty entry point — modular config
+#
+# Per Ghostty's docs, `config-file` includes are loaded AFTER this file
+# and OVERRIDE any matching keys set here. To avoid surprising precedence,
+# this file contains ONLY config-file lines — every actual setting lives
+# in one of the included files below.
+#
+# Modules live alongside this file:
+#   colors.ghostty       → theme (Catppuccin Mocha)
+#   fonts.ghostty         → font family & size
+#   keybindings.ghostty   → key bindings
+# =======================================================
+
+config-file = "colors.ghostty"
+config-file = "fonts.ghostty"
+config-file = "keybindings.ghostty"

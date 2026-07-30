@@ -116,19 +116,19 @@ function my_git_formatter() {
   fi
 
   if (( $1 )); then
-    # Up-to-date: use distinct colors (see colors.zsh for the palette counterparts).
+    # Up-to-date: use distinct colors (see p10k.zsh for the Catppuccin Mocha palette).
     local       meta='%f'
-    local      clean='%76F'   # green
-    local   modified='%178F'  # yellow
-    local  untracked='%39F'   # blue
-    local conflicted='%196F'  # red
+    local      clean='%F{#a6e3a1}'   # green
+    local   modified='%F{#f9e2af}'   # yellow
+    local  untracked='%F{#74c7ec}'   # sapphire
+    local conflicted='%F{#f38ba8}'   # red
   else
     # Incomplete / stale: everything grey.
-    local       meta='%244F'
-    local      clean='%244F'
-    local   modified='%244F'
-    local  untracked='%244F'
-    local conflicted='%244F'
+    local       meta='%F{#6c7086}'
+    local      clean='%F{#6c7086}'
+    local   modified='%F{#6c7086}'
+    local  untracked='%F{#6c7086}'
+    local conflicted='%F{#6c7086}'
   fi
 
   local res
