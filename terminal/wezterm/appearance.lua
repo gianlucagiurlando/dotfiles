@@ -10,8 +10,8 @@ M.config = {
 	--color_scheme = "Gruvbox Dark (Gogh)",
 	--color_scheme = "Dracula (Official)",
 	--color_scheme = "OneDark (base16)",
-	color_scheme = "Catppuccin Macchiato (Gogh)",
-	--color_scheme = 'Catppuccin Mocha',
+	--color_scheme = "Catppuccin Macchiato (Gogh)",
+	color_scheme = 'Catppuccin Mocha',
 	--color_scheme = 'Catppuccin Frappé (Gogh)',
 
 
