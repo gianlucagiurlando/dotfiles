@@ -1,4 +1,4 @@
 # ============ FONTS ============
 # Matches terminal/wezterm/fonts.lua for visual consistency across emulators.
-font-family = "PragmataPro Nerd Font"
-font-size = 20
+font-family = "MonoLisa Nerd Font"
+font-size = 19
