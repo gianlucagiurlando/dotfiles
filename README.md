@@ -135,7 +135,7 @@ make install
 ~/.tmux.conf             → .../tmux/.tmux.conf
 ~/.config/gh/config.yml  → .../gh/config.yml
 ~/.config/starship.toml  → .../terminal/starship/starship.toml
-~/.config/ghostty/config → .../terminal/ghostty/config
+~/.config/ghostty        → .../terminal/ghostty/
 ```
 
 Then reload your shell:
