@@ -1,4 +1,4 @@
-# dev-environment-files
+# dotfiles
 
 Personal, modular dev environment configs — version-controlled and symlink-based. Every tool finds its config at the path it expects; the source of truth lives here.
 
@@ -9,7 +9,7 @@ Covers terminal setup, Neovim, Git, zsh, tmux, and gh CLI. Designed to grow into
 ## Structure
 
 ```
-dev-environment-files/
+dotfiles/
 ├── Makefile                    # shortcuts for editing and switching
 ├── README.md
 ├── git/
@@ -112,13 +112,13 @@ They currently agree on Catppuccin Mocha because that's the theme in use everywh
 
 > **Important:** always run `make` from the repo root.
 > ```bash
-> cd ~/repos/dev-environment-files
+> cd ~/repos/dotfiles
 > make install
 > ```
 
 ```bash
-git clone https://github.com/gianlucagiurlando/dev-environment-files.git
-cd dev-environment-files
+git clone https://github.com/gianlucagiurlando/dotfiles.git
+cd dotfiles
 make install
 ```
 

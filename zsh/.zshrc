@@ -1,4 +1,4 @@
-ZSHDIR="$HOME/repos/dev-environment-files/zsh"
+ZSHDIR="$HOME/repos/dotfiles/zsh"
 
 source "$ZSHDIR/prompt-early.zsh"
 source "$ZSHDIR/plugins.zsh"

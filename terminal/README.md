@@ -9,7 +9,7 @@ Modular terminal config split across focused files, covering two prompt engines 
 > **Important:** always run `make` from the repo root — not from inside `terminal/`.
 
 ```bash
-cd ~/repos/dev-environment-files
+cd ~/repos/dotfiles
 make install
 ```
 
