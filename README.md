@@ -44,7 +44,8 @@ dotfiles/
     │   ├── config              # entry point → ~/.config/ghostty/config (config-file includes only)
     │   ├── colors.ghostty       # theme = "Catppuccin Mocha"
     │   ├── fonts.ghostty        # font family & size
-    │   └── keybindings.ghostty  # key bindings (minimal for now)
+    │   ├── keybindings.ghostty  # key bindings (minimal for now)
+    │   └── cursor.ghostty       # cursor style & color
     └── wezterm/
         ├── wezterm.lua         # entry point → ~/.wezterm.lua
         ├── fonts.lua           # font family & size

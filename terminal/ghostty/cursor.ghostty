@@ -1,0 +1,6 @@
+cursor-style = bar
+cursor-style-blink = false
+cursor-color = "#a6e3a1"
+cursor-text = "#1e1e2e"
+adjust-cursor-thickness = 2
+shell-integration-features = no-cursor

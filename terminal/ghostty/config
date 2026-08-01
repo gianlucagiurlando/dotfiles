@@ -10,8 +10,10 @@
 #   colors.ghostty       → theme (Catppuccin Mocha)
 #   fonts.ghostty         → font family & size
 #   keybindings.ghostty   → key bindings
+#   cursor.ghostty        → cursor style & color
 # =======================================================
 
 config-file = "colors.ghostty"
 config-file = "fonts.ghostty"
 config-file = "keybindings.ghostty"
+config-file = "cursor.ghostty"
