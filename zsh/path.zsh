@@ -1,14 +1,21 @@
 # ============ PATH & EXPORTS ============
-export PYENV_ROOT="$HOME/.pyenv"
-eval "$(pyenv init --path)"
 
-export PATH="$(brew --prefix qt)/bin:$PATH"
-export LDFLAGS="-L$(brew --prefix qt)/lib $LDFLAGS"
-export CPPFLAGS="-I$(brew --prefix qt)/include $CPPFLAGS"
+# pyenv (only if installed)
+if command -v pyenv &>/dev/null; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  eval "$(pyenv init --path)"
+fi
 
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+# Homebrew-based Qt setup (macOS only, only if brew exists)
+if command -v brew &>/dev/null; then
+  export PATH="$(brew --prefix qt)/bin:$PATH"
+  export LDFLAGS="-L$(brew --prefix qt)/lib $LDFLAGS"
+  export CPPFLAGS="-I$(brew --prefix qt)/include $CPPFLAGS"
+  export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+fi
 
-export PATH=$HOME/.opencode/bin:$PATH
+# opencode (only if the directory exists)
+[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
 
 # final PATH cleanup — deduplicates entries
 typeset -U path PATH
@@ -20,3 +27,4 @@ path=(
   /Applications/Skim.app/Contents/SharedSupport
   $path
 )
+export PATH="$PATH:/opt/nvim/bin"
