@@ -35,3 +35,7 @@ echo "✓ ~/.config/starship.toml → $DOTFILES/starship/starship.toml"
 
 ln -sf "$DOTFILES/ghostty" ~/.config/ghostty
 echo "✓ ~/.config/ghostty → $DOTFILES/ghostty"
+
+mkdir -p ~/.config/opencode
+ln -sf "$REPO_ROOT/opencode/opencode.json" ~/.config/opencode/opencode.json
+echo "✓ ~/.config/opencode/opencode.json → $REPO_ROOT/opencode/opencode.json"
