@@ -1,9 +1,10 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+
 format = """
 [](surface0)\
 $os\
-$username\
+$username${custom.machine}\
 [](bg:peach fg:surface0)\
 $directory\
 [](fg:peach bg:green)\
@@ -26,6 +27,7 @@ $cmd_duration\
 $time\
 [ ](fg:purple)\
 $line_break$character"""
+
 
 palette = 'catppuccin_mocha'
 
@@ -87,6 +89,13 @@ show_always = true
 style_user = "bg:surface0 fg:text"
 style_root = "bg:surface0 fg:text"
 format = '[ $user ]($style)'
+
+[custom.machine]
+command = "if [ \"$(uname)\" = \"Darwin\" ]; then echo mac; else echo vps; fi"
+when = true
+style = "bg:surface0 fg:text"
+format = '[on $output ]($style)'
+
 
 [directory]
 style = "fg:mantle bg:peach"
