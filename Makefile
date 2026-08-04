@@ -30,6 +30,9 @@ edit-zprofile:
 edit-gh:
 	nvim $(ROOT)/gh/config.yml
 
+edit-opencode:
+	nvim $(ROOT)/opencode/opencode.json
+
 prompt-p10k:
 	echo "p10k" > $(ROOT)/zsh/.prompt-engine
 
@@ -58,10 +61,11 @@ help:
 	@echo "  make edit-tmux         edit tmux config"
 	@echo "  make edit-zprofile     edit zsh profile (PATH, env setup)"
 	@echo "  make edit-gh           edit gh CLI config"
+	@echo "  make edit-opencode     edit opencode config"
 	@echo "  make prompt-p10k       switch active prompt engine to p10k"
 	@echo "  make prompt-starship   switch active prompt engine to starship"
 	@echo "  make install           symlink configs to home directory"
 	@echo "  make push              commit and push all changes"
 	@echo ""
 
-.PHONY: edit-symbols edit-segments edit-wezterm edit-fonts edit-keybindings edit-starship edit-ghostty edit-tmux edit-zprofile edit-gh prompt-p10k prompt-starship install push help
+.PHONY: edit-symbols edit-segments edit-wezterm edit-fonts edit-keybindings edit-starship edit-ghostty edit-tmux edit-zprofile edit-gh edit-opencode prompt-p10k prompt-starship install push help

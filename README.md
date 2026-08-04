@@ -18,6 +18,8 @@ dotfiles/
 ├── gh/
 │   └── config.yml              # gh CLI preferences & aliases → ~/.config/gh/config.yml
 ├── nvim/                       # LazyVim config → ~/.config/nvim
+├── opencode/
+│   └── opencode.json           # opencode config → ~/.config/opencode/opencode.json
 ├── tmux/
 │   └── .tmux.conf              # tmux config → ~/.tmux.conf
 ├── zsh/                        # modular zsh config → ~/.zshrc
@@ -126,18 +128,21 @@ make install
 `install.sh` creates the symlinks:
 
 ```
-~/.p10k.zsh              → .../terminal/p10k/p10k.zsh
-~/.wezterm.lua           → .../terminal/wezterm/wezterm.lua
-~/.config/nvim           → .../nvim/
-~/.gitconfig             → .../git/.gitconfig
-~/.gitignore_global      → .../git/.gitignore_global
-~/.zshrc                 → .../zsh/.zshrc
-~/.zprofile              → .../zsh/.zprofile
-~/.tmux.conf             → .../tmux/.tmux.conf
-~/.config/gh/config.yml  → .../gh/config.yml
-~/.config/starship.toml  → .../terminal/starship/starship.toml
-~/.config/ghostty        → .../terminal/ghostty/
+~/.p10k.zsh                       → .../terminal/p10k/p10k.zsh
+~/.wezterm.lua                    → .../terminal/wezterm/wezterm.lua
+~/.config/nvim                    → .../nvim/
+~/.gitconfig                      → .../git/.gitconfig
+~/.gitignore_global               → .../git/.gitignore_global
+~/.zshrc                          → .../zsh/.zshrc
+~/.zprofile                       → .../zsh/.zprofile
+~/.tmux.conf                      → .../tmux/.tmux.conf
+~/.config/gh/config.yml           → .../gh/config.yml
+~/.config/starship.toml           → .../terminal/starship/starship.toml
+~/.config/ghostty                 → .../terminal/ghostty/
+~/.config/opencode/opencode.json  → .../opencode/opencode.json
 ```
+
+opencode auth (`~/.local/share/opencode/auth.json`) is intentionally left out of this repo — it holds credentials, so it's set up per-machine instead of version-controlled.
 
 Then reload your shell:
 
