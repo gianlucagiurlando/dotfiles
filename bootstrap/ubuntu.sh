@@ -76,6 +76,26 @@ else
   note_installed "uv"
 fi
 
+echo "==> pyenv build dependencies"
+# pyenv compiles Python from source, so it needs these dev headers.
+# Without them, builds fail partway through with errors like
+# "ModuleNotFoundError: No module named 'zlib'" (hit directly on a
+# fresh Ubuntu 26.04 VPS).
+pyenv_build_packages=(zlib1g-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev)
+to_install=()
+for pkg in "${pyenv_build_packages[@]}"; do
+  if dpkg -s "$pkg" &>/dev/null; then
+    note_present "$pkg (apt)"
+  else
+    to_install+=("$pkg")
+  fi
+done
+
+if [ "${#to_install[@]}" -gt 0 ]; then
+  sudo apt-get install -y "${to_install[@]}"
+  for pkg in "${to_install[@]}"; do note_installed "$pkg (apt)"; done
+fi
+
 echo "==> pyenv"
 if command -v pyenv &>/dev/null || [ -d "$HOME/.pyenv" ]; then
   note_present "pyenv"
