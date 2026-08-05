@@ -109,12 +109,27 @@ They currently agree on Catppuccin Mocha because that's the theme in use everywh
 
 ### Prerequisites
 
-- zsh with [Powerlevel10k](https://github.com/romkatv/powerlevel10k) installed
-- [Starship](https://starship.rs) installed (optional — only needed if you switch to it)
+- [oh-my-zsh](https://ohmyz.sh) installed:
+  ```bash
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  ```
+  If it asks to overwrite `.zshrc`, answer **n** — this repo's `.zshrc` is a symlink into the repo; don't replace it.
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) cloned into oh-my-zsh's custom themes directory:
+  ```bash
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+  ```
+- The oh-my-zsh plugins `zsh/plugins.zsh` expects — not bundled with oh-my-zsh by default, so clone them into its custom plugins directory:
+  ```bash
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+  ```
 - [WezTerm](https://wezfurlong.org/wezterm/) and/or [Ghostty](https://ghostty.org) installed
 - [tmux](https://github.com/tmux/tmux) with [TPM](https://github.com/tmux-plugins/tpm) installed
 - [gh](https://cli.github.com) CLI installed
 - A [Nerd Font](https://www.nerdfonts.com) configured in your terminal(s) (e.g. a PragmataPro or JetBrainsMono Nerd Font build)
+
+Starship doesn't need a manual prerequisite step — `make bootstrap` installs it (see [Bootstrap](#bootstrap)).
 
 ### Install
 
@@ -157,6 +172,36 @@ source ~/.zshrc
 
 ---
 
+## First-time setup on a new machine
+
+`make install` and `make bootstrap` cover tools and configs, not credentials or machine-specific identity. On a fresh machine, also do the following:
+
+- **Git identity.** `git/.gitconfig` in this repo sets only the public name and includes `~/.gitconfig.local` for the rest — that keeps your email out of a public repo. After cloning, create it:
+  ```bash
+  echo -e "[user]\n\temail = you@example.com" > ~/.gitconfig.local
+  ```
+- **GitHub auth.**
+  ```bash
+  gh auth login
+  ```
+  Needed before `git push`/`pull` will work over HTTPS on a fresh machine. Also run `gh auth setup-git` — it writes a credential helper line into `git/.gitconfig`, which **is** version-controlled, so watch for it showing up in `git status` on unrelated commits.
+- **opencode auth** (if using opencode):
+  ```bash
+  opencode auth login
+  ```
+  Set up per machine, same reasoning as the `auth.json` note above.
+- **Tailscale.** Not part of `bootstrap`/`install`. Install it per OS:
+  ```bash
+  # macOS
+  brew install --cask tailscale-app
+
+  # Linux
+  curl -fsSL https://tailscale.com/install.sh | sh
+  ```
+  Then run `tailscale up` and follow the browser prompt to join the existing tailnet.
+
+---
+
 ## Bootstrap
 
 `bootstrap/` and the rest of this repo do different jobs:
@@ -172,9 +217,9 @@ Run it with:
 make bootstrap
 ```
 
-This detects the OS via `uname` and runs the matching script. Both scripts install the same tool list — ripgrep, fzf, jq, bat, tree, direnv, cmake, ninja-build, stow, lazygit, pipx (with poetry and ipython), uv, pyenv, and codex — and are safe to re-run: each checks whether a tool is already present before installing it, and prints a summary of what was installed, already present, or skipped.
+This detects the OS via `uname` and runs the matching script. Both scripts install the same tool list — ripgrep, fzf, jq, bat, tree, direnv, cmake, ninja-build, stow, lazygit, pipx (with poetry and ipython), uv, pyenv, starship, and codex — and are safe to re-run: each checks whether a tool is already present before installing it, and prints a summary of what was installed, already present, or skipped.
 
-- **`bootstrap/ubuntu.sh`** — installs most tools via `apt`; lazygit via its official binary release, poetry/ipython via `pipx`, and uv/pyenv/codex via their official install scripts.
+- **`bootstrap/ubuntu.sh`** — installs most tools via `apt`; lazygit via its official binary release, poetry/ipython via `pipx`, and uv/pyenv/starship/codex via their official install scripts.
 - **`bootstrap/macos.sh`** — mirrors the same list via `brew install` (codex via `brew install --cask`). Kept for reproducing a fresh Mac setup; not required on a machine that already has everything installed.
 
 Neither script edits shell rc files for PATH — that stays centralized in `zsh/path.zsh` (see [Prerequisites](#prerequisites) below and that file's `pyenv` block), matching this repo's existing convention of one place for PATH changes instead of installers scattering `export PATH=...` across `.zshrc`/`.zprofile`/`.bashrc`. If `bootstrap/ubuntu.sh` installs pyenv fresh, it prints a reminder to add `$HOME/.pyenv/bin` to `zsh/path.zsh` yourself.

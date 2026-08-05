@@ -16,7 +16,7 @@ note_installed() { INSTALLED+=("$1"); }
 note_present()   { PRESENT+=("$1"); }
 
 echo "==> brew formulae"
-formulae=(ripgrep fzf jq bat tree direnv cmake ninja stow lazygit pipx uv pyenv poetry ipython)
+formulae=(ripgrep fzf jq bat tree direnv cmake ninja stow lazygit pipx uv pyenv poetry ipython starship)
 to_install=()
 for pkg in "${formulae[@]}"; do
   if brew list --formula "$pkg" &>/dev/null; then

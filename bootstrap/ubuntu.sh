@@ -85,6 +85,14 @@ else
   PYENV_REMINDER=1
 fi
 
+echo "==> starship"
+if command -v starship &>/dev/null; then
+  note_present "starship"
+else
+  curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+  note_installed "starship"
+fi
+
 echo "==> codex"
 if command -v codex &>/dev/null; then
   note_present "codex"
