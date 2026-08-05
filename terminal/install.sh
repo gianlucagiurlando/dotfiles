@@ -8,7 +8,7 @@ echo "✓ ~/.p10k.zsh → $DOTFILES/p10k/p10k.zsh"
 ln -sf "$DOTFILES/wezterm/wezterm.lua" ~/.wezterm.lua
 echo "✓ ~/.wezterm.lua → $DOTFILES/wezterm/wezterm.lua"
 
-ln -sf "$REPO_ROOT/nvim" ~/.config/nvim
+ln -sfn "$REPO_ROOT/nvim" ~/.config/nvim
 echo "✓ ~/.config/nvim → $REPO_ROOT/nvim"
 
 ln -sf "$REPO_ROOT/git/.gitconfig" ~/.gitconfig
@@ -33,7 +33,7 @@ echo "✓ ~/.config/gh/config.yml → $REPO_ROOT/gh/config.yml"
 ln -sf "$DOTFILES/starship/starship.toml" ~/.config/starship.toml
 echo "✓ ~/.config/starship.toml → $DOTFILES/starship/starship.toml"
 
-ln -sf "$DOTFILES/ghostty" ~/.config/ghostty
+ln -sfn "$DOTFILES/ghostty" ~/.config/ghostty
 echo "✓ ~/.config/ghostty → $DOTFILES/ghostty"
 
 mkdir -p ~/.config/opencode

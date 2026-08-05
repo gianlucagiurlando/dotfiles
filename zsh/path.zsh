@@ -28,3 +28,4 @@ path=(
   $path
 )
 export PATH="$PATH:/opt/nvim/bin"
+export PATH="$HOME/.opencode/bin:$PATH"
