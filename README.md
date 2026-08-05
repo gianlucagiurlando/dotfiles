@@ -4,6 +4,8 @@ Personal, modular dev environment configs — version-controlled and symlink-bas
 
 Covers terminal setup, Neovim, Git, zsh, tmux, and gh CLI. Designed to grow into a full environment covering SSH and more.
 
+This repo has two separate jobs: **bootstrap** installs the tools, **everything else configures them**. See [Bootstrap](#bootstrap) below.
+
 ---
 
 ## Structure
@@ -12,6 +14,9 @@ Covers terminal setup, Neovim, Git, zsh, tmux, and gh CLI. Designed to grow into
 dotfiles/
 ├── Makefile                    # shortcuts for editing and switching
 ├── README.md
+├── bootstrap/
+│   ├── ubuntu.sh                # installs CLI tools/languages via apt (Ubuntu)
+│   └── macos.sh                 # installs CLI tools/languages via brew (macOS)
 ├── git/
 │   ├── .gitconfig              # public git config → ~/.gitconfig
 │   └── .gitignore_global       # global ignore → ~/.gitignore_global
@@ -149,6 +154,30 @@ Then reload your shell:
 ```zsh
 source ~/.zshrc
 ```
+
+---
+
+## Bootstrap
+
+`bootstrap/` and the rest of this repo do different jobs:
+
+| | Job | Where |
+|---|---|---|
+| **Bootstrap** | Which tools exist — installs CLI tools and languages | `bootstrap/ubuntu.sh`, `bootstrap/macos.sh` |
+| **Everything else** | How those tools behave — their config, symlinked via `make install` | `nvim/`, `zsh/`, `terminal/`, etc. |
+
+Run it with:
+
+```bash
+make bootstrap
+```
+
+This detects the OS via `uname` and runs the matching script. Both scripts install the same tool list — ripgrep, fzf, jq, bat, tree, direnv, cmake, ninja-build, stow, lazygit, pipx (with poetry and ipython), uv, pyenv, and codex — and are safe to re-run: each checks whether a tool is already present before installing it, and prints a summary of what was installed, already present, or skipped.
+
+- **`bootstrap/ubuntu.sh`** — installs most tools via `apt`; lazygit via its official binary release, poetry/ipython via `pipx`, and uv/pyenv/codex via their official install scripts.
+- **`bootstrap/macos.sh`** — mirrors the same list via `brew install` (codex via `brew install --cask`). Kept for reproducing a fresh Mac setup; not required on a machine that already has everything installed.
+
+Neither script edits shell rc files for PATH — that stays centralized in `zsh/path.zsh` (see [Prerequisites](#prerequisites) below and that file's `pyenv` block), matching this repo's existing convention of one place for PATH changes instead of installers scattering `export PATH=...` across `.zshrc`/`.zprofile`/`.bashrc`. If `bootstrap/ubuntu.sh` installs pyenv fresh, it prints a reminder to add `$HOME/.pyenv/bin` to `zsh/path.zsh` yourself.
 
 ---
 

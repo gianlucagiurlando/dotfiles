@@ -42,6 +42,13 @@ prompt-starship:
 install:
 	bash $(ROOT)/terminal/install.sh
 
+bootstrap:
+	@case "$$(uname)" in \
+		Linux) bash $(ROOT)/bootstrap/ubuntu.sh ;; \
+		Darwin) bash $(ROOT)/bootstrap/macos.sh ;; \
+		*) echo "bootstrap: unsupported OS $$(uname)" >&2; exit 1 ;; \
+	esac
+
 push:
 	git -C $(ROOT) add .
 	git -C $(ROOT) commit -m "chore: update terminal config"
@@ -65,7 +72,8 @@ help:
 	@echo "  make prompt-p10k       switch active prompt engine to p10k"
 	@echo "  make prompt-starship   switch active prompt engine to starship"
 	@echo "  make install           symlink configs to home directory"
+	@echo "  make bootstrap         install CLI tools/languages for this OS"
 	@echo "  make push              commit and push all changes"
 	@echo ""
 
-.PHONY: edit-symbols edit-segments edit-wezterm edit-fonts edit-keybindings edit-starship edit-ghostty edit-tmux edit-zprofile edit-gh edit-opencode prompt-p10k prompt-starship install push help
+.PHONY: edit-symbols edit-segments edit-wezterm edit-fonts edit-keybindings edit-starship edit-ghostty edit-tmux edit-zprofile edit-gh edit-opencode prompt-p10k prompt-starship install bootstrap push help
