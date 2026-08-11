@@ -6,7 +6,13 @@ format = """
 $os\
 $username${custom.machine}\
 [](bg:peach fg:surface0)\
-$directory\
+
+
+${custom.smart_directory}\
+${custom.fallback_directory}\
+
+
+
 [](fg:peach bg:green)\
 $git_branch\
 $git_status\
@@ -97,11 +103,61 @@ style = "bg:surface0 fg:text"
 format = '[on $output ]($style)'
 
 
-[directory]
+# [directory]
+# style = "fg:mantle bg:peach"
+# format = "[ $path ]($style)"
+# truncation_length = 1
+# truncation_symbol = ""
+
+[custom.smart_directory]
+command = '''
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 1
+
+repo_name="$(basename "$repo_root")"
+current="$(pwd)"
+
+if [ "$current" = "$repo_root" ]; then
+    printf "%s" "$repo_name"
+    exit 0
+fi
+
+relative="${current#"$repo_root"/}"
+leaf="${relative##*/}"
+
+if [ "$relative" = "$leaf" ]; then
+    printf "%s/%s" "$repo_name" "$leaf"
+    exit 0
+fi
+
+middle="${relative%/*}"
+count=$(printf "%s" "$middle" | awk -F/ '{print NF}')
+dots=$(printf '%*s' "$count" '' | tr ' ' '.')
+
+printf "%s/%s/%s" "$repo_name" "$dots" "$leaf"
+'''
+
+when = "git rev-parse --is-inside-work-tree >/dev/null 2>&1"
+shell = ["bash", "--noprofile", "--norc"]
 style = "fg:mantle bg:peach"
-format = "[ $path ]($style)"
-truncation_length = 1
-truncation_symbol = ""
+format = "[ $output ]($style)"
+
+
+[custom.fallback_directory]
+command = '''
+if [ "$PWD" = "$HOME" ]; then
+    printf "~"
+else
+    basename "$PWD"
+fi
+'''
+
+when = "! git rev-parse --is-inside-work-tree >/dev/null 2>&1"
+shell = ["bash", "--noprofile", "--norc"]
+style = "fg:mantle bg:peach"
+format = "[ $output ]($style)"
+
+
+
 
 [directory.substitutions]
 "Documents" = "󰈙 "
