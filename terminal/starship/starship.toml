@@ -3,20 +3,22 @@
 
 format = """
 [](surface0)\
+
 $os\
 $username${custom.machine}\
-[](bg:peach fg:surface0)\
 
+[](bg:peach fg:surface0)\
 
 ${custom.smart_directory}\
 ${custom.fallback_directory}\
 
-
-
 [](fg:peach bg:green)\
+
 $git_branch\
 $git_status\
+
 [](fg:green bg:blue)\
+
 $c\
 $rust\
 $golang\
@@ -26,11 +28,16 @@ $java\
 $kotlin\
 $haskell\
 $python\
+
+
 [](fg:blue bg:purple)\
+
 $docker_context\
 $cmd_duration\
+
 [](fg:purple bg:purple)\
 $time\
+
 [ ](fg:purple)\
 $line_break$character"""
 
@@ -219,11 +226,23 @@ symbol = ""
 style = "bg:teal"
 format = '[[ $symbol( $version) ](fg:base bg:teal)]($style)'
 
+# [python]
+# symbol = ""
+# style = "bg:blue"
+# version_format = "${major}.${minor}"
+# format = '[[ $symbol( $version)( ($virtualenv)) ](fg:base bg:blue)]($style)'
+
+
 [python]
 symbol = ""
-style = "bg:blue"
+style = "fg:base bg:blue"
 version_format = "${major}.${minor}"
-format = '[[ $symbol( $version)( ($virtualenv)) ](fg:base bg:blue)]($style)'
+detect_extensions = []
+detect_files = []
+detect_folders = []
+format = '[ $version ($virtualenv) ]($style)'
+
+
 
 [docker_context]
 symbol = ""
