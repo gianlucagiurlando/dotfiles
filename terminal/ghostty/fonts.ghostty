@@ -1,9 +1,9 @@
 # ============ FONTS ============
 # Matches terminal/wezterm/fonts.lua for visual consistency across emulators.
-font-family = "JetBrainsMono Nerd Font"
+font-family = "BerkeleyMono Nerd Font"
 font-size = 19
 
-
+#BerkeleyMono Nerd Font
 #CaskaydiaMono Nerd Font
 #Hack Nerd Font
 #MonoLisa Nerd Font
