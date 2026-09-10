@@ -1,2 +1,3 @@
 *.local
 .gitconfig.local
+nvim/lazy-lock.json
