@@ -5,7 +5,7 @@ format = """
 [](surface0)\
 
 $os\
-$username${custom.machine}\
+$username${custom.machine}${custom.identity_work}${custom.identity_personal}\
 
 [](bg:peach fg:surface0)\
 
@@ -108,6 +108,28 @@ command = "if [ \"$(uname)\" = \"Darwin\" ]; then echo mac; else echo vps; fi"
 when = true
 style = "bg:surface0 fg:text"
 format = '[on $output ]($style)'
+
+# ============ GIT IDENTITY ============
+# Shows which identity will author the next commit in this repo, so a work
+# machine cannot quietly commit as the personal account (or vice versa).
+# Derived at runtime from `git config user.email`, so it stays correct on
+# every machine with no per-machine configuration. Outside a git repo it
+# reports the global default identity, which is what a commit made there
+# would use — so a fresh window always states which account is active.
+
+[custom.identity_work]
+command = 'printf work'
+when = 'case "$(git config user.email 2>/dev/null)" in *@deliverance.ai) exit 0 ;; *) exit 1 ;; esac'
+shell = ["bash", "--noprofile", "--norc"]
+style = "bg:surface0 fg:green"
+format = '[ $output ]($style)'
+
+[custom.identity_personal]
+command = 'printf personal'
+when = 'e="$(git config user.email 2>/dev/null)"; [ -n "$e" ] || exit 1; case "$e" in *@deliverance.ai) exit 1 ;; *) exit 0 ;; esac'
+shell = ["bash", "--noprofile", "--norc"]
+style = "bg:surface0 fg:peach"
+format = '[ $output ]($style)'
 
 
 # [directory]

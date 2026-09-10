@@ -2,6 +2,15 @@
 bikes() {
   local env_path="$HOME/Documents/mini_projects/santander-env/bin/activate"
   local script_path="$HOME/Documents/mini_projects/santander_cli.py"
+  # Postcode is deliberately not hardcoded: this repo is public, and a fixed
+  # postcode would publish a home location. Set it per machine in an
+  # untracked file, e.g. ~/.zshenv:  export BIKES_POSTCODE="AB1 2CD"
+  local postcode="${BIKES_POSTCODE:-}"
+
+  if [ -z "$postcode" ]; then
+    echo "bikes: set BIKES_POSTCODE in ~/.zshenv (e.g. export BIKES_POSTCODE=\"AB1 2CD\")" >&2
+    return 1
+  fi
 
   if [ ! -f "$env_path" ] || [ ! -f "$script_path" ]; then
     echo "bikes: local Santander script not available on this machine"
@@ -9,7 +18,7 @@ bikes() {
   fi
 
   source "$env_path"
-  python3 "$script_path" --postcode "POSTCODE_REDACTED" --radius "${1:-700}"
+  python3 "$script_path" --postcode "$postcode" --radius "${1:-700}"
   deactivate
 }
 
