@@ -202,6 +202,20 @@ source ~/.zshrc
 
 ---
 
+## Work and personal machines
+
+This repo is public and runs on more than one machine. Machines differ — screen size, commit email, a search location used by some script — but the repo must not store any of that, and must not say which machine is which.
+
+The rule: never hardcode a value that is private or that should differ per machine. Pick one of these instead, in order of preference:
+
+1. **Derive it at runtime.** If the answer already lives somewhere, read it instead of storing it. The Starship prompt's identity indicator does this — it reads `git config user.email` on each render rather than keeping a per-machine setting.
+2. **An untracked `*.local` file, included by a tracked file.** Matches `.gitconfig.local` and `terminal/ghostty/config.local` — the tracked file sets defaults and includes the local file last, so the local file wins. `*.local` is gitignored, so it never leaves the machine it's on.
+3. **An environment variable, with a tracked fallback.** Set in `~/.zshenv` (untracked). Used where a script or a config language can read an environment variable directly, e.g. `WEZTERM_FONT_SIZE` in `terminal/wezterm/fonts.lua`.
+
+None of these name a machine as "work" or "personal" in a tracked file. The repo doesn't know or care which machine it's on — only what that machine has chosen to set locally.
+
+---
+
 ## Bootstrap
 
 `bootstrap/` and the rest of this repo do different jobs:
