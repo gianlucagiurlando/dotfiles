@@ -1,0 +1,6 @@
+# Copy this file to config.local (untracked — matches the *.local pattern
+# used elsewhere in this repo, e.g. .gitconfig.local) to override settings
+# on this machine only. Loaded last, so any key here wins.
+#
+# Example: a smaller font on a smaller screen.
+font-size = 14

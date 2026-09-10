@@ -10,7 +10,9 @@ M.config = {
 	--font = wezterm.font("PragmataPro Nerd Font", { weight = "Regular" }),
 	--font = wezterm.font("OperatorMono Nerd Font", { weight = "Regular" }),
 	--font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" }),
-	font_size = 18,
+	-- Per-machine override: export WEZTERM_FONT_SIZE in ~/.zshenv (untracked)
+	-- to use a different size on a smaller screen, e.g. export WEZTERM_FONT_SIZE=14
+	font_size = tonumber(os.getenv("WEZTERM_FONT_SIZE")) or 18,
 	--cursor's shape
 	default_cursor_style = "SteadyBar",
 }

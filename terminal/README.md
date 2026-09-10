@@ -30,7 +30,8 @@ terminal/
 │   ├── config              # entry point — config-file includes only, no settings directly
 │   ├── colors.ghostty       # theme = "Catppuccin Mocha"
 │   ├── fonts.ghostty        # font family & size
-│   └── keybindings.ghostty  # key bindings (minimal for now)
+│   ├── keybindings.ghostty  # key bindings (minimal for now)
+│   └── config.local.example # template for an untracked per-machine override
 └── wezterm/
     ├── wezterm.lua         # entry point — required by WezTerm, requires the modules
     ├── fonts.lua           # font family & size
@@ -81,6 +82,13 @@ WezTerm hot-reloads on file save — no restart needed.
 | `keybindings.ghostty` | `keybind = ...` lines. Currently minimal — Ghostty's defaults apply until this is filled in. |
 
 Ghostty hot-reloads config on save (or `super+shift+,` by default).
+
+### Per-machine overrides
+
+This repo is shared (via `git pull`) across machines with different screens, but font size shouldn't be — a laptop with a smaller display needs a smaller font than the machine this repo is maintained from.
+
+- **Ghostty**: `config` includes an optional `config.local` (`config-file = "?config.local"`) as its last line, so it loads last and wins on any key it sets. Copy `config.local.example` to `config.local` and edit it — that file is untracked (matches the repo's `*.local` convention, e.g. `.gitconfig.local`), so it never gets pushed or pulled.
+- **WezTerm**: `fonts.lua` reads `font_size` from the `WEZTERM_FONT_SIZE` environment variable, falling back to `18`. Set it in `~/.zshenv` (untracked), e.g. `export WEZTERM_FONT_SIZE=14`.
 
 ---
 

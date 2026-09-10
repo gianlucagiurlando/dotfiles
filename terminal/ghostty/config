@@ -17,3 +17,8 @@ config-file = "colors.ghostty"
 config-file = "fonts.ghostty"
 config-file = "keybindings.ghostty"
 config-file = "cursor.ghostty"
+
+# Per-machine overrides (e.g. a smaller font size on a smaller screen).
+# Untracked — see ghostty/config.local.example. The "?" prefix makes this
+# include optional, so machines without one are unaffected.
+config-file = "?config.local"
