@@ -214,6 +214,29 @@ The rule: never hardcode a value that is private or that should differ per machi
 
 None of these name a machine as "work" or "personal" in a tracked file. The repo doesn't know or care which machine it's on — only what that machine has chosen to set locally.
 
+### The work machine is pull-only
+
+The work machine's copy of this repo is set up to pull only, never push. This is recorded here so no one tries to replicate or undo it. The setup is entirely machine-local and untracked, so there is nothing here to pull, and no action is needed on this end.
+
+On the work machine:
+
+- The remote's push URL is set to a dead `no_push://` scheme.
+- `.git/hooks/pre-commit` and `.git/hooks/pre-push` both exit `1`.
+
+Together these make a commit or a push from that machine impossible.
+
+Syncing on that machine uses a local git alias:
+
+```
+git sync = "git fetch origin && git reset --hard @{u}"
+```
+
+This discards local drift in tracked files instead of merging it. The reason: on the work machine, `nvim/lazy-lock.json` kept changing whenever LazyVim updated plugins, and that dirty file blocked `git pull`.
+
+The result: this machine is now the sole author of the repo. Nothing will ever arrive from the work machine, so every change — including `nvim/lazy-lock.json` plugin pins, which are authoritative here — must be committed and pushed from here.
+
+It also raises the stakes on the convention above: anything machine-specific belongs in an untracked `*.local` file (e.g. `terminal/ghostty/config.local` for font size), never in a tracked one. A tracked-file edit made on the work machine would be silently wiped by its next `git sync`.
+
 ---
 
 ## Bootstrap
