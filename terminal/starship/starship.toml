@@ -209,7 +209,7 @@ staged = "+${count}"
 untracked = "?${count}"
 
 [nodejs]
-symbol = ""
+symbol = ""
 style = "bg:blue"
 format = '[[ $symbol( $version) ](fg:base bg:blue)]($style)'
 
